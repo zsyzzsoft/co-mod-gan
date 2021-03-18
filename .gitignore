@@ -1,0 +1,15 @@
+/results/
+/images/
+/models/
+/test/
+/training/_my_pm.pyd
+/.stylegan2-cache/
+*.db
+*.pyc
+*.dll
+*.pkl
+*.ipynb
+*.zip
+*.tfrecords
+.vscode
+*.csv
