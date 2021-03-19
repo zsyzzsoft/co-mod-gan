@@ -1,20 +1,18 @@
 # Large Scale Image Completion via Co-Modulated Generative Adversarial Networks, ICLR 2021 (Spotlight)
 
-### [Demo (coming soon!)](https://comodgan.ml) | [Paper](https://openreview.net/pdf?id=sSjqmfsk95O)
+### [Demo](http://comodgan.ml) | [Paper](https://openreview.net/pdf?id=sSjqmfsk95O)
 
 <img src="imgs/demo.gif"/>
 
-*Our interactive web demo will be open to public very soon!*
+**[NEW!]** Time to play with our [interactive web demo](http://comodgan.ml)!
 
-### Abstract
-
-*Numerous task-specific variants of conditional generative adversarial networks have been developed for image completion. Yet, a serious limitation remains that all existing algorithms tend to fail when handling large-scale missing regions. To overcome this challenge, we propose a generic new approach that bridges the gap between image-conditional and recent modulated unconditional generative architectures via **co-modulation** of both conditional and stochastic style representations. Also, due to the lack of good quantitative metrics for image completion, we propose the new **Paired/Unpaired Inception Discriminative Score (P-IDS/U-IDS)**, which robustly measures the perceptual fidelity of inpainted images compared to real images via linear separability in a feature space. Experiments demonstrate superior performance in terms of both quality and diversity over state-of-the-art methods in free-form image completion and easy generalization to image-to-image translation.*
+*Numerous task-specific variants of conditional generative adversarial networks have been developed for image completion. Yet, a serious limitation remains that all existing algorithms tend to fail when handling **large-scale missing regions**. To overcome this challenge, we propose a generic new approach that bridges the gap between image-conditional and recent modulated unconditional generative architectures via **co-modulation** of both conditional and stochastic style representations. Also, due to the lack of good quantitative metrics for image completion, we propose the new **Paired/Unpaired Inception Discriminative Score (P-IDS/U-IDS)**, which robustly measures the perceptual fidelity of inpainted images compared to real images via linear separability in a feature space. Experiments demonstrate superior performance in terms of both quality and diversity over state-of-the-art methods in free-form image completion and easy generalization to image-to-image translation.*
 
 <img src="imgs/grid-main.jpg" width="1000px"/>
 
 Large Scale Image Completion via Co-Modulated Generative Adversarial Networks<br>
 [Shengyu Zhao](https://scholar.google.com/citations?user=gLCdw70AAAAJ), [Jonathan Cui](https://www.linkedin.com/in/jonathan-cui-110b211a6/), Yilun Sheng, Yue Dong, Xiao Liang, Eric I Chang, Yan Xu<br>
-[arXiv](https://openreview.net/pdf?id=sSjqmfsk95O) | [OpenReview](https://openreview.net/pdf?id=sSjqmfsk95O)
+[arXiv](http://arxiv.org/abs/2103.10428) | [OpenReview](https://openreview.net/pdf?id=sSjqmfsk95O)
 
 ## Overview
 
