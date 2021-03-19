@@ -12,6 +12,7 @@
 
 Large Scale Image Completion via Co-Modulated Generative Adversarial Networks<br>
 [Shengyu Zhao](https://scholar.google.com/citations?user=gLCdw70AAAAJ), [Jonathan Cui](https://www.linkedin.com/in/jonathan-cui-110b211a6/), Yilun Sheng, Yue Dong, Xiao Liang, Eric I Chang, Yan Xu<br>
+Tsinghua University and Microsoft Research
 [arXiv](http://arxiv.org/abs/2103.10428) | [OpenReview](https://openreview.net/pdf?id=sSjqmfsk95O)
 
 ## Overview
