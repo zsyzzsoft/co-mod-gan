@@ -30,7 +30,7 @@ class TFRecordDataset:
         prefetch_mb     = 2048,     # Amount of data to prefetch (megabytes), 0 = disable prefetching.
         buffer_mb       = 256,      # Read buffer size (megabytes).
         num_threads     = 2,        # Number of concurrent threads.
-        val_images      = 10000,
+        num_val_images  = 10000,
         compressed      = False):
 
         self.tfrecord_dir       = tfrecord_dir
@@ -48,13 +48,13 @@ class TFRecordDataset:
         self._tf_labels_var     = None
         self._tf_labels_dataset = None
         self._tf_datasets       = dict()
-        self._tf_val_datasets       = dict()
+        self._tf_val_datasets   = dict()
         self._tf_iterator       = None
-        self._tf_val_iterator       = None
+        self._tf_val_iterator   = None
         self._tf_init_ops       = dict()
-        self._tf_val_init_ops       = dict()
+        self._tf_val_init_ops   = dict()
         self._tf_minibatch_np   = None
-        self._tf_minibatch_val_np   = None
+        self._tf_minibatch_val_np  = None
         self._tf_masks_iterator_np = None
         self._cur_minibatch     = -1
         self._cur_lod           = -1
@@ -68,20 +68,21 @@ class TFRecordDataset:
         for tfr_file in tfr_files:
             tfr_opt = tf.python_io.TFRecordOptions(tf.python_io.TFRecordCompressionType.NONE)
             for record in tf.python_io.tf_record_iterator(tfr_file, tfr_opt):
-                if self.is_compressed(record):
+                ex = tf.train.Example()
+                ex.ParseFromString(record)
+                features = ex.features.feature
+                if 'compressed' in features and features['compressed'].int64_list.value[0]:
                     compressed = True
-                tfr_shapes.append(self.parse_shape_np(record))
+                if 'num_val_images' in features:
+                    num_val_images = features['num_val_images'].int64_list.value[0]
+                tfr_shapes.append(features['shape'].int64_list.value)
                 break
-        
-        if compressed:
-            val_images = 36500
 
         # Determine shape and resolution.
         max_shape = max(tfr_shapes, key=np.prod)
         
-        if max_shape[0] == 6:
+        if max_shape[0] > 3:
             self.pix2pix = True
-            val_images = 200
         
         self.resolution = resolution if resolution is not None else max_shape[1]
         self.resolution_log2 = int(np.log2(self.resolution))
@@ -90,7 +91,6 @@ class TFRecordDataset:
         assert all(shape[0] == max_shape[0] for shape in tfr_shapes)
         assert all(shape[1] == shape[2] for shape in tfr_shapes)
         assert all(shape[1] == self.resolution // (2**lod) for shape, lod in zip(tfr_shapes, tfr_lods))
-        # assert all(lod in tfr_lods for lod in range(self.resolution_log2 - 1))
 
         # Autodetect label filename.
         if self.label_file is None:
@@ -127,7 +127,7 @@ class TFRecordDataset:
                 dset_raw = tf.data.TFRecordDataset(tfr_file, compression_type='', buffer_size=buffer_mb<<20)
                 if max_images is not None:
                     dset_raw = dset_raw.take(max_images)
-                for tf_datasets, dset in [(self._tf_val_datasets, dset_raw.take(val_images)), (self._tf_datasets, dset_raw.skip(val_images))]:
+                for tf_datasets, dset in [(self._tf_val_datasets, dset_raw.take(num_val_images)), (self._tf_datasets, dset_raw.skip(num_val_images))]:
                     if compressed:
                         dset = dset.map(self.parse_and_decode_tfrecord_tf, num_parallel_calls=num_threads)
                     else:
@@ -232,27 +232,6 @@ class TFRecordDataset:
         data = tf.image.decode_image(features['data'])
         data = tf.image.resize_with_crop_or_pad(data, shape[1], shape[2])
         return tf.broadcast_to(tf.transpose(data, [2, 0, 1]), shape)
-
-    # Parse individual image from a tfrecords file into NumPy array.
-    @staticmethod
-    def parse_tfrecord_np(record):
-        ex = tf.train.Example()
-        ex.ParseFromString(record)
-        shape = ex.features.feature['shape'].int64_list.value # pylint: disable=no-member
-        data = ex.features.feature['data'].bytes_list.value[0] # pylint: disable=no-member
-        return np.fromstring(data, np.uint8).reshape(shape)
-        
-    @staticmethod
-    def is_compressed(record):
-        ex = tf.train.Example()
-        ex.ParseFromString(record)
-        return 'compressed' in ex.features.feature and ex.features.feature['compressed'].int64_list.value[0] == 1
-        
-    @staticmethod
-    def parse_shape_np(record):
-        ex = tf.train.Example()
-        ex.ParseFromString(record)
-        return ex.features.feature['shape'].int64_list.value
 
 #----------------------------------------------------------------------------
 # Helper func for constructing a dataset object using the given options.

@@ -1,6 +1,7 @@
 /results/
 /images/
 /models/
+/datasets/
 /test/
 /training/_my_pm.pyd
 /.stylegan2-cache/

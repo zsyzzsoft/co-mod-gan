@@ -25,11 +25,12 @@ This repo is implemented upon and has the same dependencies as the official [Sty
 ## Datasets
 
 - FFHQ dataset (in TFRecords format) can be downloaded following the [StyleGAN2 repo](https://github.com/NVlabs/stylegan2).
-- Places2 dataset can be downloaded in [this website](http://places2.csail.mit.edu/download.html) (Places365-Challenge 2016 high-resolution images, [training set](http://data.csail.mit.edu/places/places365/train_large_places365challenge.tar) and [validation set](http://data.csail.mit.edu/places/places365/val_large.tar)). The raw images should be converted into TFRecords using `dataset_tools/create_places2.py`.
+- Places2 dataset can be downloaded in [this website](http://places2.csail.mit.edu/download.html) (Places365-Challenge 2016 high-resolution images, [training set](http://data.csail.mit.edu/places/places365/train_large_places365challenge.tar) and [validation set](http://data.csail.mit.edu/places/places365/val_large.tar)). The raw images should be converted into TFRecords using `dataset_tools/create_from_images.py` with `--shuffle --compressed`.
+- To prepare a custom dataset, please use `dataset_tools/create_from_images.py`. You only need to specify `--val-image-dir` for testing purpose.
 
 ## Training
 
-The following script is for training on FFHQ. It will splits 10k images for validation. We recommend using 8 NVIDIA Tesla V100 GPUs for training. Training at 512x512 resolution takes about 1 week.
+The following script is for training on FFHQ. It will split 10k images for validation. We recommend using 8 NVIDIA Tesla V100 GPUs for training. Training at 512x512 resolution takes about 1 week.
 
 ```bash
 python run_training.py --data-dir=DATA_DIR --dataset=DATASET --metrics=ids10k --num-gpus=8

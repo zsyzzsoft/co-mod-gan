@@ -41,7 +41,7 @@ def run(dataset, data_dir, result_dir, num_gpus, total_kimg, mirror_augment, met
     metrics = [metric_defaults[x] for x in metrics]
     desc = 'co-mod-gan'
 
-    desc += '-' + dataset
+    desc += '-' + os.path.basename(dataset)
     dataset_args = EasyDict(tfrecord_dir=dataset)
 
     assert num_gpus in [1, 2, 4, 8]
@@ -92,7 +92,7 @@ def _parse_comma_sep(s):
 _examples = '''examples:
 
   # Train CoModGAN using the FFHQ dataset
-  python %(prog)s --data-dir=datasets --dataset=ffhq --metrics=ids10k --num-gpus=8
+  python %(prog)s --data-dir=~/datasets --dataset=ffhq --metrics=ids10k --num-gpus=8
 
 '''
 
