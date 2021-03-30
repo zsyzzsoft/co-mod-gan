@@ -26,7 +26,7 @@ This repo is implemented upon and has the same dependencies as the official [Sty
 
 - FFHQ dataset (in TFRecords format) can be downloaded following the [StyleGAN2 repo](https://github.com/NVlabs/stylegan2).
 - Places2 dataset can be downloaded in [this website](http://places2.csail.mit.edu/download.html) (Places365-Challenge 2016 high-resolution images, [training set](http://data.csail.mit.edu/places/places365/train_large_places365challenge.tar) and [validation set](http://data.csail.mit.edu/places/places365/val_large.tar)). The raw images should be converted into TFRecords using `dataset_tools/create_from_images.py` with `--shuffle --compressed`.
-- To prepare a custom dataset, please use `dataset_tools/create_from_images.py`. You only need to specify `--val-image-dir` for testing purpose.
+- To prepare a custom dataset, please use `dataset_tools/create_from_images.py`, which will automatically center crop and resize your images to the specified resolution. You only need to specify `--val-image-dir` for testing purpose.
 
 ## Training
 
