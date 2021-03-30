@@ -43,6 +43,8 @@ class TFRecordExporter:
     def add_image(self, img):
         if self.shape is None:
             self.set_shape(img.shape)
+        if not self.compressed:
+            assert list(self.shape) == list(img.shape)
         quant = np.rint(img).clip(0, 255).astype(np.uint8) if not self.compressed else img
         ex = tf.train.Example(features=tf.train.Features(feature={
             'shape': tf.train.Feature(int64_list=tf.train.Int64List(value=quant.shape)),

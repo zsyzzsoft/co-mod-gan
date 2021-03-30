@@ -8,29 +8,33 @@ import PIL.Image
 
 from tfrecord_utils import TFRecordExporter
 
-def worker(in_queue, out_queue, compressed):
+def worker(in_queue, out_queue, resolution, compressed):
     while True:
         fpath = in_queue.get()
         if compressed:
             if fpath.endswith('.jpg') or fpath.endswith('.JPG'):
                 img = np.fromfile(fpath, dtype='uint8')
-                out_queue.put(img)
             else:
-                out_queue.put(None)
+                img = None
         else:
             try:
-                img = np.asarray(PIL.Image.open(fpath))
-            except:
-                out_queue.put(None)
+                img = PIL.Image.open(fpath)
+            except IOError:
+                img = None
             else:
-                img = img.transpose([2, 0, 1])
-                out_queue.put(img)
+                img_size = min(img.size[0], img.size[1])
+                left = (img.size[0] - img_size) // 2
+                top = (img.size[1] - img_size) // 2
+                img = img.crop((left, top, left + img_size, top + img_size))
+                img = img.resize((resolution, resolution), PIL.Image.BILINEAR)
+                img = np.asarray(img).transpose([2, 0, 1])
+        out_queue.put(img)
 
 def create_from_images(tfrecord_dir, val_image_dir, train_image_dir, resolution, num_channels, num_processes, shuffle, compressed):
     in_queue = mp.Queue()
     out_queue = mp.Queue(num_processes * 8)
 
-    worker_procs = [mp.Process(target=worker, args=(in_queue, out_queue, compressed)) for _ in range(num_processes)]
+    worker_procs = [mp.Process(target=worker, args=(in_queue, out_queue, resolution, compressed)) for _ in range(num_processes)]
     for worker_proc in worker_procs:
         worker_proc.daemon = True
         worker_proc.start()
@@ -76,9 +80,9 @@ def main():
     parser.add_argument('--tfrecord-dir', help='Output directory of generated TFRecord', required=True)
     parser.add_argument('--val-image-dir', help='Root directory of validation images', default=None)
     parser.add_argument('--train-image-dir', help='Root directory of training images', default=None)
-    parser.add_argument('--resolution', help='Training resolution', type=int, default=512)
+    parser.add_argument('--resolution', help='Target resolution', type=int, default=512)
     parser.add_argument('--num-channels', help='Number of channels of images', type=int, default=3)
-    parser.add_argument('--num_processes', help='Number of parallel processes', type=int, default=8)
+    parser.add_argument('--num-processes', help='Number of parallel processes', type=int, default=8)
     parser.add_argument('--shuffle', default=False, action='store_true')
     parser.add_argument('--compressed', default=False, action='store_true')
 

@@ -33,7 +33,7 @@ This repo is implemented upon and has the same dependencies as the official [Sty
 The following script is for training on FFHQ. It will split 10k images for validation. We recommend using 8 NVIDIA Tesla V100 GPUs for training. Training at 512x512 resolution takes about 1 week.
 
 ```bash
-python run_training.py --data-dir=DATA_DIR --dataset=DATASET --metrics=ids10k --num-gpus=8
+python run_training.py --data-dir=DATA_DIR --dataset=DATASET --metrics=ids10k --mirror-augment --num-gpus=8
 ```
 
 The following script is for training on Places2, which has a validation set of 36500 images:
