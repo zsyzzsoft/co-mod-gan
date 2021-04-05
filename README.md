@@ -42,17 +42,9 @@ The following script is for training on Places2, which has a validation set of 3
 python run_training.py --data-dir=DATA_DIR --dataset=DATASET --metrics=ids36k5 --total-kimg 50000 --num-gpus=8
 ```
 
-## Evaluation
+## Pre-Trained Models
 
-The following script is for evaluation:
-
-```bash
-python run_metrics.py --data-dir=DATA_DIR --dataset=DATASET --network=CHECKPOINT_FILE(S) --metrics=METRIC(S) --num-gpus=1
-```
-
-Commonly used metrics are `ids10k` and `ids36k5` (for FFHQ and Places2 respectively), which will compute P-IDS and U-IDS together with FID. By default, masks are generated randomly for evaluation, or you may append the metric name with `-h0` ([0.0, 0.2]) to `-h4` ([0.8, 1.0]) to specify the range of masked ratio.
-
-Our pre-trained models are available on [Google Drive](https://drive.google.com/drive/folders/1zSJj1ichgSA-4sECGm-fQ0Ww8aiwpkoO). Below lists our provided pre-trained models:
+Our pre-trained models are available on [Google Drive](https://drive.google.com/drive/folders/1zSJj1ichgSA-4sECGm-fQ0Ww8aiwpkoO):
 
 | Model name & URL                                            | Description           |
 | ----------------------------------------------------------- | --------------------- |
@@ -68,6 +60,26 @@ Use the following script to run the interactive demo locally:
 ```bash
 python run_demo.py -d DATA_DIR/DATASET -c CHECKPOINT_FILE(S)
 ```
+
+or the following command as a minimal example of usage:
+
+```bash
+python run_generator.py -c CHECKPOINT_FILE -i imgs/example_image.jpg -m imgs/example_mask.jpg -o imgs/example_output.jpg
+```
+
+## Evaluation
+
+The following script is for evaluation:
+
+```bash
+python run_metrics.py --data-dir=DATA_DIR --dataset=DATASET --network=CHECKPOINT_FILE(S) --metrics=METRIC(S) --num-gpus=1
+```
+
+Commonly used metrics are `ids10k` and `ids36k5` (for FFHQ and Places2 respectively), which will compute P-IDS and U-IDS together with FID. By default, masks are generated randomly for evaluation, or you may append the metric name with `-h0` ([0.0, 0.2]) to `-h4` ([0.8, 1.0]) to specify the range of masked ratio.
+
+## Testing
+
+The following command is an example of generating images:
 
 ## Citation
 
