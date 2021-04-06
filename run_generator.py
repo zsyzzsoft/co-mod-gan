@@ -11,7 +11,7 @@ def create_from_images(checkpoint, image, mask, output):
     
     _, _, Gs = misc.load_pkl(checkpoint)
     latent = np.random.randn(1, *Gs.input_shape[1:])
-    fake = Gs.run(latent, None, real[np.newaxis], mask[np.newaxis])[0]
+    fake = Gs.run(latent, None, real[np.newaxis], mask[np.newaxis, np.newaxis])[0]
     fake = misc.adjust_dynamic_range(fake, [-1, 1], [0, 255])
     fake = fake.clip(0, 255).astype(np.uint8).transpose([1, 2, 0])
     fake = PIL.Image.fromarray(fake)
