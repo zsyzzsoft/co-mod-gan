@@ -4,6 +4,9 @@ import PIL.Image
 
 from training import misc
 
+from dnnlib import tflib
+tflib.init_tf()
+
 def create_from_images(checkpoint, image, mask, output):
     real = np.asarray(PIL.Image.open(image)).transpose([2, 0, 1])
     real = misc.adjust_dynamic_range(real, [0, 255], [-1, 1])
