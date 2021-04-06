@@ -7,11 +7,11 @@ from training import misc
 def create_from_images(checkpoint, image, mask, output):
     real = np.asarray(PIL.Image.open(image)).transpose([2, 0, 1])
     real = misc.adjust_dynamic_range(real, [0, 255], [-1, 1])
-    mask = np.asarray(PIL.Image.open(mask).convert('1'))
+    mask = np.asarray(PIL.Image.open(mask).convert('1'), dtype=np.float32)[np.newaxis]
     
     _, _, Gs = misc.load_pkl(checkpoint)
     latent = np.random.randn(1, *Gs.input_shape[1:])
-    fake = Gs.run(latent, None, real[np.newaxis], mask[np.newaxis, np.newaxis])[0]
+    fake = Gs.run(latent, None, real[np.newaxis], mask[np.newaxis])[0]
     fake = misc.adjust_dynamic_range(fake, [-1, 1], [0, 255])
     fake = fake.clip(0, 255).astype(np.uint8).transpose([1, 2, 0])
     fake = PIL.Image.fromarray(fake)
