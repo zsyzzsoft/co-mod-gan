@@ -2,6 +2,7 @@ import argparse
 import numpy as np
 import PIL.Image
 
+from dnnlib import tflib
 from training import misc
 
 def create_from_images(checkpoint, image, mask, output):
@@ -9,6 +10,7 @@ def create_from_images(checkpoint, image, mask, output):
     real = misc.adjust_dynamic_range(real, [0, 255], [-1, 1])
     mask = np.asarray(PIL.Image.open(mask).convert('1'), dtype=np.float32)[np.newaxis]
     
+    tflib.init_tf()
     _, _, Gs = misc.load_pkl(checkpoint)
     latent = np.random.randn(1, *Gs.input_shape[1:])
     fake = Gs.run(latent, None, real[np.newaxis], mask[np.newaxis])[0]
