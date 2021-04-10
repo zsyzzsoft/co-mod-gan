@@ -77,10 +77,6 @@ python run_metrics.py --data-dir=DATA_DIR --dataset=DATASET --network=CHECKPOINT
 
 Commonly used metrics are `ids10k` and `ids36k5` (for FFHQ and Places2 respectively), which will compute P-IDS and U-IDS together with FID. By default, masks are generated randomly for evaluation, or you may append the metric name with `-h0` ([0.0, 0.2]) to `-h4` ([0.8, 1.0]) to specify the range of masked ratio.
 
-## Testing
-
-The following command is an example of generating images:
-
 ## Citation
 
 If you find this code helpful, please cite our paper:
