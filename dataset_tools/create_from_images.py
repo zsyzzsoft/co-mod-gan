@@ -27,7 +27,7 @@ def worker(in_queue, out_queue, resolution, compressed):
                 top = (img.size[1] - img_size) // 2
                 img = img.crop((left, top, left + img_size, top + img_size))
                 img = img.resize((resolution, resolution), PIL.Image.BILINEAR)
-                img = np.asarray(img).transpose([2, 0, 1])
+                img = np.asarray(img.convert('RGB')).transpose([2, 0, 1])
         out_queue.put(img)
 
 def create_from_images(tfrecord_dir, val_image_dir, train_image_dir, resolution, num_channels, num_processes, shuffle, compressed):
