@@ -46,14 +46,14 @@ python run_training.py --data-dir=DATA_DIR --dataset=DATASET --metrics=ids36k5 -
 
 Our pre-trained models are available on [Google Drive](https://drive.google.com/drive/folders/1zSJj1ichgSA-4sECGm-fQ0Ww8aiwpkoO):
 
-| Model name & URL                                            | Description           |
-| ----------------------------------------------------------- | --------------------- |
-| [co-mod-gan-ffhq-9-025000.pkl](https://drive.google.com/file/d/1b3XxfAmJ9k2vd73j-3nPMr_lvNMQOFGE/view?usp=sharing) | Large scale image completion on FFHQ (512x512) |
-| [co-mod-gan-ffhq-10-025000.pkl](https://drive.google.com/file/d/1M2dSxlJnCFNM6LblpB2nQCnaimgwaaKu/view?usp=sharing) | Large scale image completion on FFHQ (1024x1024) |
-| [co-mod-gan-places2-050000.pkl](https://drive.google.com/file/d/1dJa3DRWIkx6Ebr8Sc0v1FdvWf6wkd010/view?usp=sharing) | Large scale image completion on Places2 (512x512) |
-| [co-mod-gan-coco-stuff-025000.pkl](https://drive.google.com/file/d/1dJa3DRWIkx6Ebr8Sc0v1FdvWf6wkd010/view?usp=sharing) | Image-to-image translation on COCO-Stuff (labels to photos) (512x512) |
-| [co-mod-gan-edges2shoes-025000.pkl](https://drive.google.com/file/d/155p-_zAtL8RJSsKHAWrRaGxJVzT4NZKg/view?usp=sharing) | Image-to-image translation on edges2shoes (256x256) |
-| [co-mod-gan-edges2handbags-025000.pkl](https://drive.google.com/file/d/1nBIQaUs6fXRpEt1cweqQKtWVw5UZAqLi/view?usp=sharing) | Image-to-image translation on edges2handbags (256x256) |
+| Model name & URL                                             | Description                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [co-mod-gan-ffhq-9-025000.pkl](https://drive.google.com/file/d/1b3XxfAmJ9k2vd73j-3nPMr_lvNMQOFGE/view?usp=sharing) | Large scale image completion on FFHQ (512x512)               |
+| [co-mod-gan-ffhq-10-025000.pkl](https://drive.google.com/file/d/1M2dSxlJnCFNM6LblpB2nQCnaimgwaaKu/view?usp=sharing) | Large scale image completion on FFHQ (1024x1024)             |
+| [co-mod-gan-places2-050000.pkl](https://drive.google.com/file/d/1dJa3DRWIkx6Ebr8Sc0v1FdvWf6wkd010/view?usp=sharing) | Large scale image completion on Places2 (512x512)            |
+| [co-mod-gan-coco-stuff-025000.pkl](https://drive.google.com/file/d/1Ol9_pKMpfIHHwbdE7RFmJcCAzfj8hqxQ/view?usp=sharing) | Image-to-image translation on COCO-Stuff (labels to photos) (512x512) |
+| [co-mod-gan-edges2shoes-025000.pkl](https://drive.google.com/file/d/155p-_zAtL8RJSsKHAWrRaGxJVzT4NZKg/view?usp=sharing) | Image-to-image translation on edges2shoes (256x256)          |
+| [co-mod-gan-edges2handbags-025000.pkl](https://drive.google.com/file/d/1nBIQaUs6fXRpEt1cweqQKtWVw5UZAqLi/view?usp=sharing) | Image-to-image translation on edges2handbags (256x256)       |
 
 Use the following script to run the interactive demo locally:
 
