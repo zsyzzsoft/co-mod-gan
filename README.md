@@ -17,7 +17,7 @@ Tsinghua University and Microsoft Research<br>
 
 ## Overview
 
-This repo is implemented upon and has the same dependencies as the official [StyleGAN2 repo](https://github.com/NVlabs/stylegan2). We also provide a [Dockerfile](https://github.com/zsyzzsoft/tree/master/Dockerfile) for Docker users. This repo currently supports:
+This repo is implemented upon and has the same dependencies as the official [StyleGAN2 repo](https://github.com/NVlabs/stylegan2). We also provide a [Dockerfile](https://github.com/zsyzzsoft/co-mod-gan/blob/master/Dockerfile) for Docker users. This repo currently supports:
 - [x] Large scale image completion experiments on FFHQ and Places2
 - [ ] Image-to-image translation experiments on edges to photos and COCO-Stuff
 - [x] Evaluation code of *Paired/Unpaired Inception Discriminative Score (P-IDS/U-IDS)*
