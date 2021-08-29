@@ -4,6 +4,8 @@
 
 <img src="imgs/demo.gif"/>
 
+**[NOTICE]** Our web demo will be closed recently. Enjoy the last days!
+
 **[NEW!]** Time to play with our [interactive web demo](http://comodgan.ml)!
 
 *Numerous task-specific variants of conditional generative adversarial networks have been developed for image completion. Yet, a serious limitation remains that all existing algorithms tend to fail when handling **large-scale missing regions**. To overcome this challenge, we propose a generic new approach that bridges the gap between image-conditional and recent modulated unconditional generative architectures via **co-modulation** of both conditional and stochastic style representations. Also, due to the lack of good quantitative metrics for image completion, we propose the new **Paired/Unpaired Inception Discriminative Score (P-IDS/U-IDS)**, which robustly measures the perceptual fidelity of inpainted images compared to real images via linear separability in a feature space. Experiments demonstrate superior performance in terms of both quality and diversity over state-of-the-art methods in free-form image completion and easy generalization to image-to-image translation.*
