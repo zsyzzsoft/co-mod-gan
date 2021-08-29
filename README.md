@@ -19,13 +19,15 @@ Tsinghua University and Microsoft Research<br>
 
 This repo is implemented upon and has the same dependencies as the official [StyleGAN2 repo](https://github.com/NVlabs/stylegan2). We also provide a [Dockerfile](https://github.com/zsyzzsoft/co-mod-gan/blob/master/Dockerfile) for Docker users. This repo currently supports:
 - [x] Large scale image completion experiments on FFHQ and Places2
-- [ ] Image-to-image translation experiments on edges to photos and COCO-Stuff
+- [x] Image-to-image translation experiments on Edges2Shoes and Edges2Handbags
+- [ ] Image-to-image translation experiments on COCO-Stuff
 - [x] Evaluation code of *Paired/Unpaired Inception Discriminative Score (P-IDS/U-IDS)*
 
 ## Datasets
 
 - FFHQ dataset (in TFRecords format) can be downloaded following the [StyleGAN2 repo](https://github.com/NVlabs/stylegan2).
 - Places2 dataset can be downloaded in [this website](http://places2.csail.mit.edu/download.html) (Places365-Challenge 2016 high-resolution images, [training set](http://data.csail.mit.edu/places/places365/train_large_places365challenge.tar) and [validation set](http://data.csail.mit.edu/places/places365/val_large.tar)). The raw images should be converted into TFRecords using `dataset_tools/create_from_images.py` with `--shuffle --compressed`.
+- Edges2Shoes and Edges2Handbags datasets can be downloaded following the [pix2pix repo](https://github.com/phillipi/pix2pix). The raw images should be converted into TFRecords using `dataset_tools/create_from_images.py` with `--shuffle --pix2pix`.
 - To prepare a custom dataset, please use `dataset_tools/create_from_images.py`, which will automatically center crop and resize your images to the specified resolution. You only need to specify `--val-image-dir` for testing purpose.
 
 ## Training
@@ -40,6 +42,12 @@ The following script is for training on Places2, which has a validation set of 3
 
 ```bash
 python run_training.py --data-dir=DATA_DIR --dataset=DATASET --metrics=ids36k5 --total-kimg 50000 --num-gpus=8
+```
+
+The following script is for training on Edges2Handbags (and similarly for Edges2Shoes):
+
+```bash
+python run_training.py --data-dir=DATA_DIR --dataset=DATASET --metrics=fid200-rt-handbags --mirror-augment --num-gpus=8
 ```
 
 ## Pre-Trained Models

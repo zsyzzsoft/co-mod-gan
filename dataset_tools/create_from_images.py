@@ -8,10 +8,11 @@ import PIL.Image
 
 from tfrecord_utils import TFRecordExporter
 
-def worker(in_queue, out_queue, resolution, compressed):
+def worker(in_queue, out_queue, resolution, compressed, pix2pix):
     while True:
         fpath = in_queue.get()
         if compressed:
+            assert not pix2pix
             if fpath.endswith('.jpg') or fpath.endswith('.JPG'):
                 img = np.fromfile(fpath, dtype='uint8')
             else:
@@ -22,19 +23,21 @@ def worker(in_queue, out_queue, resolution, compressed):
             except IOError:
                 img = None
             else:
-                img_size = min(img.size[0], img.size[1])
-                left = (img.size[0] - img_size) // 2
+                img_size = min(img.size[0] // 2 if pix2pix else img.size[1], img.size[1])
+                left = (img.size[0] - (img_size * 2 if pix2pix else img_size)) // 2
                 top = (img.size[1] - img_size) // 2
-                img = img.crop((left, top, left + img_size, top + img_size))
-                img = img.resize((resolution, resolution), PIL.Image.BILINEAR)
+                img = img.crop((left, top, left + (img_size * 2 if pix2pix else img_size), top + img_size))
+                img = img.resize((resolution * 2 if pix2pix else resolution, resolution), PIL.Image.BILINEAR)
                 img = np.asarray(img.convert('RGB')).transpose([2, 0, 1])
+                if pix2pix:
+                    img = np.concatenate(np.split(img, 2, axis=-1), axis=0)
         out_queue.put(img)
 
-def create_from_images(tfrecord_dir, val_image_dir, train_image_dir, resolution, num_channels, num_processes, shuffle, compressed):
+def create_from_images(tfrecord_dir, val_image_dir, train_image_dir, resolution, num_channels, num_processes, shuffle, compressed, pix2pix):
     in_queue = mp.Queue()
     out_queue = mp.Queue(num_processes * 8)
 
-    worker_procs = [mp.Process(target=worker, args=(in_queue, out_queue, resolution, compressed)) for _ in range(num_processes)]
+    worker_procs = [mp.Process(target=worker, args=(in_queue, out_queue, resolution, compressed, pix2pix)) for _ in range(num_processes)]
     for worker_proc in worker_procs:
         worker_proc.daemon = True
         worker_proc.start()
@@ -42,7 +45,7 @@ def create_from_images(tfrecord_dir, val_image_dir, train_image_dir, resolution,
     print('Processes created.')
 
     with TFRecordExporter(tfrecord_dir, compressed=compressed) as tfr:
-        tfr.set_shape([num_channels, resolution, resolution])
+        tfr.set_shape([num_channels * 2 if pix2pix else num_channels, resolution, resolution])
 
         if val_image_dir:
             print('Processing validation images...')
@@ -85,6 +88,7 @@ def main():
     parser.add_argument('--num-processes', help='Number of parallel processes', type=int, default=8)
     parser.add_argument('--shuffle', default=False, action='store_true')
     parser.add_argument('--compressed', default=False, action='store_true')
+    parser.add_argument('--pix2pix', default=False, action='store_true')
 
     args = parser.parse_args()
     create_from_images(**vars(args))
