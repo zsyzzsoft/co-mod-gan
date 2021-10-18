@@ -5,7 +5,7 @@ import PIL.Image
 from dnnlib import tflib
 from training import misc
 
-def create_from_images(checkpoint, image, mask, output, truncation):
+def generate(checkpoint, image, mask, output, truncation):
     real = np.asarray(PIL.Image.open(image)).transpose([2, 0, 1])
     real = misc.adjust_dynamic_range(real, [0, 255], [-1, 1])
     mask = np.asarray(PIL.Image.open(mask).convert('1'), dtype=np.float32)[np.newaxis]
@@ -28,7 +28,7 @@ def main():
     parser.add_argument('-t', '--truncation', help='Truncation psi for the trade-off between quality and diversity. Defaults to 1.', default=None)
 
     args = parser.parse_args()
-    create_from_images(**vars(args))
+    generate(**vars(args))
 
 if __name__ == "__main__":
     main()

@@ -40,10 +40,10 @@ The following script is for training on FFHQ. It will split 10k images for valid
 python run_training.py --data-dir=DATA_DIR --dataset=DATASET --metrics=ids10k --mirror-augment --num-gpus=8
 ```
 
-The following script is for training on Places2, which has a validation set of 36500 images:
+The following script is for training on Places2 at resolution 512x512 (resolution must be specified when training on compressed dataset), which has a validation set of 36500 images:
 
 ```bash
-python run_training.py --data-dir=DATA_DIR --dataset=DATASET --metrics=ids36k5 --total-kimg 50000 --num-gpus=8
+python run_training.py --data-dir=DATA_DIR --dataset=DATASET --resolution=512 --metrics=ids36k5 --total-kimg 50000 --num-gpus=8
 ```
 
 The following script is for training on Edges2Handbags (and similarly for Edges2Shoes):
