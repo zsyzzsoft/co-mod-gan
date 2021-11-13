@@ -1,8 +1,10 @@
 # Large Scale Image Completion via Co-Modulated Generative Adversarial Networks, ICLR 2021 (Spotlight)
 
-### [Demo](http://comodgan.ml) | [Paper](https://openreview.net/pdf?id=sSjqmfsk95O)
+### [Demo (Unofficial)](https://www.microsoft.com/en-us/ai/ai-lab-CoModGAN) | [Paper](https://openreview.net/pdf?id=sSjqmfsk95O)
 
 <img src="imgs/demo.gif"/>
+
+**[NEW!]** Another [unofficial demo](https://www.microsoft.com/en-us/ai/ai-lab-CoModGAN) is available!
 
 **[NOTICE]** Our web demo will be closed recently. Enjoy the last days!
 
